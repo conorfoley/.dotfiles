@@ -12,11 +12,6 @@ tags
 *.rbc
 *.tern-port
 
-node_modules
-components
-build
-npm-debug.log
-deps
-target
+/npm-debug.log
 
 .mon
