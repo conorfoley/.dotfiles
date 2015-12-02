@@ -49,7 +49,7 @@ find_project() {
   #   tmux_start_session $1
   # fi
 
-  find $directory -maxdepth $depth -type d -name $query | read -r project
+  find $directory -maxdepth $depth -type d -name $query 2> /dev/null | read -r project
 
   if [ ! -z $project ]; then
     echo $project

@@ -52,6 +52,7 @@ Bundle 'tpope/vim-markdown'
 Bundle 'kchmck/vim-coffee-script'
 Bundle 'digitaltoad/vim-jade'
 Bundle 'wavded/vim-stylus'
+Bundle 'lambdatoast/elm.vim'
 
 " }}}
 " Section: Options {{{1
@@ -262,11 +263,3 @@ endif
 " TODO put these somewhere else
 autocmd BufWinEnter * silent! loadview 
 autocmd BufWinLeave * silent! mkview
-
-autocmd VimEnter * NERDTree
-autocmd VimEnter * wincmd p
-autocmd VimEnter * if !argc() | NERDTree | endif
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") 
-  \&& b:NERDTreeType == "primary") | q | endif
-
-

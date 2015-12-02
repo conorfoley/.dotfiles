@@ -2,6 +2,8 @@
 
 # shortcut to this dotfiles path is $ZSH
 export ZSH=$HOME/.dotfiles
+export PROJECTS=$HOME/Projects
+export ELM_HOME=/usr/local/lib/node_modules/elm
 
 # all of our zsh files
 typeset -U config_files

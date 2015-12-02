@@ -29,6 +29,13 @@ slate.configAll({
   ]
 });
 
+var fullscreen = slate.operation("move", {
+  "x" : "screenOriginX",
+  "y" : "screenOriginY",
+  "width" : "screenSizeX",
+  "height" : "screenSizeY"
+});
+
 // Operations
 var Ops = {};
 
@@ -74,15 +81,15 @@ S.on('appOpened', function(event, app){
 
   if(name === 'Emacs'){
     app.eachWindow(function(win){
-      count >= 1 && win.doOperation(Ops.middle.left);
-      count === 1 && win.doOperation(Ops.left.left);
+      count >= 1 && win.doOperation(fullscreen);
+      count === 1 && win.doOperation(fullscreen);
     });
   };
 
   if(name === 'iTerm'){
     app.eachWindow(function(win){
-      count >= 1 && win.doOperation(Ops.middle.right);
-      count === 1 && win.doOperation(Ops.left.right);
+      count >= 1 && win.doOperation(fullscreen);
+      count === 1 && win.doOperation(fullscreen);
     });
   };
 
@@ -95,8 +102,8 @@ S.on('appOpened', function(event, app){
 
   if(name === 'Google Chrome'){
     app.eachWindow(function(win){
-      count >= 1 && win.doOperation(Ops.left.right);
-      count === 1 && win.doOperation(Ops.left.full);
+      count >= 1 && win.doOperation(fullscreen);
+      count === 1 && win.doOperation(fullscreen);
     });
   };
 
@@ -121,14 +128,14 @@ var oneMonitorLayout = S.lay('1monitor', {
     'operations': [Ops.focusiTerm, Ops.focusEmacs]
   },
   'Google Chrome': {
-    'operations': [Ops.left.full],
+    'operations': [fullscreen],
     'repeat': true
   },
   'iTerm': {
-    'operations': [Ops.left.right]
+    'operations': [fullscreen]
   },
   'Emacs': {
-    'operations': [Ops.left.left]
+    'operations': [fullscreen]
   },
   'Microsoft Outlook': {
     'operations': [Ops.left.full],
@@ -147,15 +154,15 @@ var threeMonitorLayout = S.lay('3monitor', {
     'operations': [Ops.focusiTerm, Ops.focusEmacs]
   },
   'Google Chrome': {
-    'operations': [Ops.left.right],
+    'operations': [fullscreen],
     'repeat': true
   },
   'Emacs': {
-    'operations': [Ops.middle.left],
+    'operations': [fullscreen],
     'repeat': true
   },
   'iTerm': {
-    'operations': [Ops.middle.right],
+    'operations': [fullscreen],
     'repeat': true
   },
   'Microsoft Outlook': {
