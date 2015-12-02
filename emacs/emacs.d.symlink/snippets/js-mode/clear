@@ -1,5 +1,0 @@
-# -*- mode: snippet -*-
-# name: clear
-# key: clear
-# --
-process.stdout.write('\u001B[2J');

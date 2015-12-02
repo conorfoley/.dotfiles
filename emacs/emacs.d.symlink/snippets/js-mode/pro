@@ -1,7 +1,0 @@
-# -*- mode: snippet -*-
-# name: pro
-# key: pro
-# --
-${1}.prototype.${2} = function (${3}) {
-                    ${4}
-};

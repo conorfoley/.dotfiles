@@ -1,8 +1,0 @@
-# -*- mode: snippet -*-
-# name: describe
-# expand-env: ((yas-indent-line 'fixed) (yas-wrap-around-region 'nil))
-# key: desc
-# --
-describe('$1', function(){
-  $0
-});

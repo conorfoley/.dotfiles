@@ -1,7 +1,0 @@
-# -*- mode: snippet -*-
-# name: require
-# init: foobar
-# binding: A-C-M-a
-# --
-var $1 = require('$1');
-__${init}__

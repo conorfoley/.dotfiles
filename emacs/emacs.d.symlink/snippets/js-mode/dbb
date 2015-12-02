@@ -1,5 +1,0 @@
-# -*- mode: snippet -*-
-# name: debug
-# key: dbb
-# --
-debug('$1', $2);
