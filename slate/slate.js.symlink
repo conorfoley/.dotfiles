@@ -71,142 +71,8 @@ Ops.right.full = Ops.screenFull.dup({'screen': 2});
 Ops.right.left = Ops.screenLeft.dup({'screen': 2});
 Ops.right.right = Ops.screenRight.dup({'screen': 2});
 
-Ops.focusiTerm = S.op('focus', {'app': 'iTerm'});
-Ops.focusEmacs = S.op('focus', {'app': 'Emacs'});
-
-// Event to handle opening of apps
-S.on('appOpened', function(event, app){
-  var count = S.screenCount();
-  var name = app.name();
-
-  if(name === 'Emacs'){
-    app.eachWindow(function(win){
-      count >= 1 && win.doOperation(fullscreen);
-      count === 1 && win.doOperation(fullscreen);
-    });
-  };
-
-  if(name === 'iTerm'){
-    app.eachWindow(function(win){
-      count >= 1 && win.doOperation(fullscreen);
-      count === 1 && win.doOperation(fullscreen);
-    });
-  };
-
-  if(name === 'Microsoft Outlook'){
-    app.eachWindow(function(win){
-      count >= 1 && win.doOperation(Ops.right.full);
-      count === 1 && win.doOperation(Ops.left.full);
-    });
-  };
-
-  if(name === 'Google Chrome'){
-    app.eachWindow(function(win){
-      count >= 1 && win.doOperation(fullscreen);
-      count === 1 && win.doOperation(fullscreen);
-    });
-  };
-
-  if(name === 'Spotify'){
-    app.eachWindow(function(win){
-      count >= 1 && win.doOperation(Ops.right.full);
-      count === 1 && win.doOperation(Ops.left.full);
-    });
-  };
-
-  if(name === 'Slate'){
-    app.eachWindow(function(win){
-      count >= 1 && win.doOperation(Ops.right.right);
-      count === 1 && win.doOperation(Ops.left.right);
-    });
-  };
-});
-
-// layouts
-var oneMonitorLayout = S.lay('1monitor', {
-  '_after_': {
-    'operations': [Ops.focusiTerm, Ops.focusEmacs]
-  },
-  'Google Chrome': {
-    'operations': [fullscreen],
-    'repeat': true
-  },
-  'iTerm': {
-    'operations': [fullscreen]
-  },
-  'Emacs': {
-    'operations': [fullscreen]
-  },
-  'Microsoft Outlook': {
-    'operations': [Ops.left.full],
-    'repeat': true
-  },
-  'Slack': {
-    'operations': [Ops.left.full]
-  },
-  'Spotify': {
-    'operations': [Ops.left.full]
-  }
-});
-
-var threeMonitorLayout = S.lay('3monitor', {
-  '_after_': {
-    'operations': [Ops.focusiTerm, Ops.focusEmacs]
-  },
-  'Google Chrome': {
-    'operations': [fullscreen],
-    'repeat': true
-  },
-  'Emacs': {
-    'operations': [fullscreen],
-    'repeat': true
-  },
-  'iTerm': {
-    'operations': [fullscreen],
-    'repeat': true
-  },
-  'Microsoft Outlook': {
-    'operations': [Ops.right.full],
-    'repeat': true
-  },
-  'Spotify': {
-    'operations': [Ops.right.full],
-    'repeat': true
-  },
-  'Slack': {
-    'operations': [Ops.right.right]
-  },
-  'Messages': {
-    'operations': [Ops.right.left]
-  }
-});
-
-// Default Layouts
-S.def(1, oneMonitorLayout);
-// S.def(2, twoMonitorsLayout);
-S.def(3, threeMonitorLayout);
-
-// Layout Operations
-var oneMonitor = S.op('layout', {name: '1monitor' });
-// var twoMonitors = S.op('layout', {name: twoMonitorsLayout });
-var threeMonitor = S.op('layout', {name: '3monitor' });
-
-// Universal Layout Function
-function universalLayout(win){
-  var count = S.screenCount();
-
-  if(count === 1){
-    S.log('One Monitor Layout');
-    oneMonitor.run();
-  };
-
-  if(count === 3){
-    S.log('Three Monitor Layout');
-    threeMonitor.run();
-  };
-}
-
 // Bindings
+
 slate.bindAll({
   cmd: {
     ctrl: {
@@ -287,12 +153,7 @@ slate.bindAll({
       '2': $('toss', '1', 'resize'),
       '3': $('toss', '2', 'resize')
     }
-  },
-
-  hyper: {
-    r: 'relaunch',
-    g: 'grid',
-    space: universalLayout
   }
+
 });
 S.log('Slate Config Loaded');
