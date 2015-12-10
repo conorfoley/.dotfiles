@@ -174,7 +174,7 @@ nnoremap gW :OpenURL http://en.wikipedia.org/wiki/Special:Search?search=<cword><
 " Section: Mappings {{{1
 " ----------------------
 
-let mapleader=","
+let mapleader=" "
 
 nnoremap ; :
 vnoremap > >gv
