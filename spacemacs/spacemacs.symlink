@@ -30,9 +30,13 @@ values."
      elm
      emacs-lisp
      git
+     html
+     javascript
+     local
      markdown
      org
      osx
+     react
      (shell :variables
             shell-default-height 30
             shell-default-position 'bottom)
@@ -192,6 +196,8 @@ values."
    ;; specified with an installed package.
    ;; Not used for now. (default nil)
    dotspacemacs-default-package-repository nil
+   js2-basic-offset 2
+   js-indent-level 2
    ))
 
 (defun dotspacemacs/user-init ()
