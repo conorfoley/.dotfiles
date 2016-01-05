@@ -23,20 +23,21 @@ tmn() {
 }
 
 tmux_start_session() {
-  local dir=$1
+  local dir=`echo $1 | sed "s,$HOME,~,"`
   vared -p "path: " dir
   test $? -gt 0 && return 1
+  local realdir=`echo $dir | sed "s,~,$HOME,"`
 
-  local safename=`echo $dir | tr -d '.' | xargs basename`
+  local safename=`echo $realdir | tr -d '.' | xargs basename`
   vared -p "name: " safename
   test $? -gt 0 && return 1
 
-  if [[ ! -d $dir ]]; then
+  if [[ ! -d $realdir ]]; then
     echo "creating $dir..."
-    mkdir -p $dir
+    mkdir -p $realdir
   fi
 
-  cd $dir
+  cd $realdir
   tmux new-session -A -s $safename
 }
 
@@ -49,7 +50,7 @@ find_project() {
   #   tmux_start_session $1
   # fi
 
-  find $directory -maxdepth $depth -type d -name $query 2> /dev/null | read -r project
+  find -L $directory -maxdepth $depth -type d -name $query 2> /dev/null | read -r project
 
   if [ ! -z $project ]; then
     echo $project
