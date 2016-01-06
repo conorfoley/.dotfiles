@@ -151,7 +151,8 @@ slate.bindAll({
             'throw 2 resize'],
       '1': $('toss', '0', 'resize'),
       '2': $('toss', '1', 'resize'),
-      '3': $('toss', '2', 'resize')
+      '3': $('toss', '2', 'resize'),
+      '4': $('toss', '3', 'resize')
     }
   }
 
