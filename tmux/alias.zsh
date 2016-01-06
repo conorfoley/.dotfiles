@@ -12,7 +12,8 @@ tmn() {
     $PROJECTS/$USER 1 $1 \
     $PROJECTS 2 $1 \
     ~ 1 $1 \
-    ~ 2 $1
+    ~ 2 $1 \
+    /tmp 1 $1
   )
 
   if [ -z $dir ]; then
