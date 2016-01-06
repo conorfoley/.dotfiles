@@ -2,7 +2,7 @@
 
 function lsr() {
   gls \
-    --ignore={#*,*~,.#*.DS_Store,.tern-port} \
+    --ignore={#*,*~,.#*,.DS_Store,.tern-port} \
     -go \
     -l \
     --almost-all \
