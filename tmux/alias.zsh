@@ -17,7 +17,11 @@ tmn() {
   )
 
   if [ -z $dir ]; then
-    tmux_start_session ~/Projects
+    if [ $1 =~ ^/ ]; then
+      tmux_start_session $1
+    else
+      tmux_start_session ~/Projects/mndvns/$1
+    fi
   else
     tmux_start_session $dir
   fi
