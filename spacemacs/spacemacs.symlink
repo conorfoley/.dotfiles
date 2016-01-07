@@ -14,8 +14,8 @@ values."
    ;; List of additional paths where to look for configuration layers.
    ;; Paths must have a trailing slash (i.e. `~/.mycontribs/')
    dotspacemacs-configuration-layer-path '(
-     "~/.dotfiles/spacemacs/contribs"
-     )
+                                           "~/.dotfiles/spacemacs/contribs"
+                                           )
    ;; List of configuration layers to load. If it is the symbol `all' instead
    ;; of a list then all discovered layers will be installed.
    dotspacemacs-configuration-layers
@@ -30,17 +30,42 @@ values."
      elixir
      elm
      emacs-lisp
+     (eyebrowse :variables
+                eyebrowse-display-help t)
      git
      html
-     javascript
+     (javascript :variables
+                 js2-basic-offset 2
+                 js2-strict-missing-semi-warning nil
+                 js2-missing-semi-one-line-override nil
+                 js-indent-level 2
+                 js2-global-externs
+                 '("node" ;; node-webkit
+                   "phantom" ;; phantomjs
+                   "yield" ;; es6
+                   "setTimeout" "clearTimeout" "setInterval" "clearInterval" "console" "JSON" "global" ;; javascript
+                   "module" "require" "exports" ;; commonjs
+                   "__filename" "__dirname" "process" "Buffer" ;; node
+                   "location" "window" "history" ;; browser
+                   "it" "describe" "before" "after" "beforeEach" "afterEach" ;; mocha
+                   "suite" "test" "setup" "teardown" ;; mocha tdd
+                   "expect" ;; jasmine
+                   "inject" ;; angular-mock
+                   "angular" ;; angular
+                   "Meteor" "Template" "Session" ;; meteor
+                   "React" ;; react
+                   "chrome" ;; chrome
+                   ))
      local
      markdown
-     org
+     (org :variables
+          org-enable-github-support t)
      osx
      react
      (shell :variables
             shell-default-height 30
             shell-default-position 'bottom)
+     spacemacs-layouts
      spell-checking
      stylus
      syntax-checking
@@ -199,16 +224,13 @@ values."
    dotspacemacs-default-package-repository nil
 
    evil-shift-width 2
-   js2-basic-offset 2
-   js2-strict-missing-semi-warning nil
-   js2-missing-semi-one-line-override nil
-   js-indent-level 2
-   css-indent-offset 2
    web-mode-markup-indent-offset 2
    web-mode-css-indent-offset 2
    web-mode-code-indent-offset 2
    web-mode-attr-indent-offset 2
-   ))
+   css-indent-offset 2
+   )
+  )
 
 (defun dotspacemacs/user-init ()
   "Initialization function for user code.
@@ -221,6 +243,9 @@ user code."
   "Configuration function for user code.
  This function is called at the very end of Spacemacs initialization after
 layers configuration. You are free to put any user code."
+
+  (setq org-bullets-bullet-list '("■" "◆" "▲" "▶"))
+
   ;; ignore useless files
   (eval-after-load 'ido '(add-to-list 'ido-ignore-files "\\.DS_Store"))
   (eval-after-load 'ido '(add-to-list 'ido-ignore-files "\\.tern-port"))
