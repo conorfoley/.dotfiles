@@ -141,8 +141,7 @@ slate.bindAll({
     },
 
     // utility functions
-    esc: 'hint',
-    z: 'undo'
+    esc: 'hint'
   },
   ctrl:{
     alt: {
