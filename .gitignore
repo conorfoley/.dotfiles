@@ -1,7 +1,0 @@
-vim/bundle
-*.private.*
-*.cache
-*.elc
-elpa
-url
-iterm/*.log
