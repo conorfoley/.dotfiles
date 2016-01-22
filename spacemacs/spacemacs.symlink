@@ -57,11 +57,13 @@ values."
                    "chrome" ;; chrome
                    ))
      local
+     lua
      markdown
      (org :variables
           org-enable-github-support t)
      osx
      react
+     restclient
      (shell :variables
             shell-default-height 30
             shell-default-position 'bottom)
@@ -247,6 +249,8 @@ layers configuration. You are free to put any user code."
 
   (setq org-bullets-bullet-list '("■" "◆" "▲" "▶"))
   (add-to-list 'auto-mode-alist '("\\.ess\\'" . stylus-mode))
+  (add-to-list 'auto-mode-alist '("\\.env\\'" . shell-script-mode))
+  (add-to-list 'auto-mode-alist '("\\.env.example\\'" . shell-script-mode))
 
   ;; ignore useless files
   (eval-after-load 'ido '(add-to-list 'ido-ignore-files "\\.DS_Store"))
