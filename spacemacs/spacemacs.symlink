@@ -60,6 +60,9 @@ values."
      lua
      markdown
      (org :variables
+          org-startup-indented nil
+          org-adapt-indentation nil
+          org-hide-leading-stars t
           org-enable-github-support t)
      osx
      react
@@ -232,6 +235,8 @@ values."
    web-mode-code-indent-offset 2
    web-mode-attr-indent-offset 2
    css-indent-offset 2
+   sh-basic-offset 8
+   sh-indentation 8
    )
   )
 
