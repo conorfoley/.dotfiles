@@ -1,9 +1,15 @@
 # -*- mode: shell-script; -*-
 
 alias tma='tmux attach -t'
-alias tml='tmux list-sessions'
 alias tmk='tmux kill-session -t'
 alias tmka='tmux kill-server'
+
+tml() {
+  tmux list-sessions 2>/dev/null
+  if [ $? -gt 0 ]; then
+    >&2 echo "no tmux session"
+  fi
+}
 
 tmn() {
   local dir=$(
@@ -51,11 +57,11 @@ find_project() {
   local depth=$2
   local query=$3
 
-  # if [[ ${query[1]} = / && -d $1 ]]; then
-  #   tmux_start_session $1
-  # fi
-
-  find -L $directory -maxdepth $depth -type d -name $query 2> /dev/null | read -r project
+  find \
+    -L $directory \
+    -maxdepth $depth \
+    -type d -name $query \
+    2> /dev/null | read -r project
 
   if [ ! -z $project ]; then
     echo $project
@@ -70,5 +76,3 @@ find_project() {
     exit 1
   fi
 }
-
-alias et="vim ~/.tmux.conf"
