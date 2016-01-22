@@ -1,7 +1,7 @@
 
 alias _node="/usr/local/bin/node"
 
-if [[ `node -v` =~ ^v0.11 ]]; then
+if [[ `node -v` =~ ^v0.12 ]]; then
   alias _node="/usr/local/bin/node --harmony"
 fi
 
