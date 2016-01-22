@@ -17,5 +17,10 @@ while true; do
   esac
 done
 echo
+
+./manage/install.sh
+
 # find the installers and run them iteratively
-find $__dirname -name install.sh | while read installer ; do sh -c "${installer}" ; done
+find $__dirname -name install.sh \
+  | /usr/bin/grep -v -e manage \
+  | while read installer ; do sh -c "${installer}" ; done

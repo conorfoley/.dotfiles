@@ -1,12 +1,8 @@
-# Install n
-
-if test ! (( $+commands[n] )); then
-  mkdir /tmp/n && cd /tmp/n && curl -L# https://github.com/visionmedia/n/archive/master.tar.gz | tar zx --strip 1 && make install
+if [[ ! -x `which n` ]]; then
+  manage install visionmedia/n
 fi
 
-# Install node
-
-if test ! (( $+commands[node] )); then
+if [[ ! -x `which node` ]]; then
   n latest
 fi
 
