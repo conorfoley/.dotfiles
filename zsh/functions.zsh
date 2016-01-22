@@ -2,7 +2,7 @@
 
 function lsr() {
   gls \
-    --ignore={#*,*~,.#*,.DS_Store,.tern-port} \
+    --ignore={#*,*~,.#*,.DS_Store,.tern-port,.git,node_modules} \
     -go \
     -l \
     --almost-all \
@@ -11,7 +11,10 @@ function lsr() {
     --color=always \
     --time-style='+%b-%d-%y %H:%M' \
     $@ \
-      | /usr/bin/grep -v -e '^total'
+      | tail -n+2 \
+      | awk '{
+          printf "\033[0;30m%-11s %-4s %9s %s\033[0m %s %s %s\n", $1, $3, $4, $5, $6, $7, $8
+        }'
 }
 
 function cd() {
