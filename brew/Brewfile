@@ -1,4 +1,3 @@
-
 update
 upgrade
 
@@ -14,17 +13,22 @@ install homebrew/dupes/grep
 tap railwaycat/emacsmacport
 install emacs-mac
 
-install zsh
 install ack
-install git
-install tree
-install hub
-install python
-install heroku-toolbelt
+install coreutils
 install erlang
+install git
+install heroku-toolbelt
+install hub
+install jq
+install python
+install reattach-to-user-namespace
 install redis
 install riak
+install tmux
+install tree
+install vim
 install wget
+install zsh
 
 # Install homebrew-cask
 
@@ -39,7 +43,6 @@ cask --appdir="/Applications" \
   google-drive \
   one-password \
   iterm2 \
-  nv-alt \
   spotify \
   slate \
   sublime-text

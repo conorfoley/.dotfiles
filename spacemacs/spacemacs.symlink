@@ -235,8 +235,8 @@ values."
    web-mode-code-indent-offset 2
    web-mode-attr-indent-offset 2
    css-indent-offset 2
-   sh-basic-offset 8
-   sh-indentation 8
+   sh-basic-offset 2
+   sh-indentation 2
    )
   )
 
@@ -254,6 +254,7 @@ layers configuration. You are free to put any user code."
 
   (setq org-bullets-bullet-list '("■" "◆" "▲" "▶"))
   (add-to-list 'auto-mode-alist '("\\.ess\\'" . stylus-mode))
+  (add-to-list 'auto-mode-alist '("\\.zsh\\'" . shell-script-mode))
   (add-to-list 'auto-mode-alist '("\\.env\\'" . shell-script-mode))
   (add-to-list 'auto-mode-alist '("\\.env.example\\'" . shell-script-mode))
 

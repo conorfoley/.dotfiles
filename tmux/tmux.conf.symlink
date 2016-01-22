@@ -77,7 +77,6 @@ bind l select-pane -R
 # reload config
 bind R source-file ~/.tmux.conf \; display-message "Config reloaded..."
 
-# rm mouse mode fail
 set -g mouse on
 
 bind-key -r C-S-Left swap-window -t -1

@@ -1,4 +1,4 @@
-# -*- mode: sh -*-
+# display
 
 function lsr() {
   gls \
@@ -11,11 +11,13 @@ function lsr() {
     --color=always \
     --time-style='+%b-%d-%y %H:%M' \
     $@ \
-      | tail -n+2 \
-      | awk '{
+    | tail -n+2 \
+    | awk '{
           printf "\033[0;30m%-11s %-4s %9s %s\033[0m %s %s %s\n", $1, $3, $4, $5, $6, $7, $8
         }'
 }
+
+# navigation
 
 function cd() {
   builtin cd "$@"
@@ -47,6 +49,8 @@ function set-window-title() {
 
   printf "$title_format" "${(V%)title_formatted}"
 }
+
+# search
 
 function grep() {
   local ignored=$(get_ignored)
@@ -114,13 +118,13 @@ function map_to_option() {
     local list=$(tr ' ' '\n' <<< $2)
 
     echo $list \
-        | sed "s,\(.*\),$option=\1," \
-        | tr '\n' ' '
+      | sed "s,\(.*\),$option=\1," \
+      | tr '\n' ' '
 }
 
 function rows_to_list() {
     cat $1 \
-        | tr "\n" "$2" \
-        | sed "s/$2\($2*\)/$2/g" \
-        | sed "s/\(.*\)$2$/\1/"
+      | tr "\n" "$2" \
+      | sed "s/$2\($2*\)/$2/g" \
+      | sed "s/\(.*\)$2$/\1/"
 }

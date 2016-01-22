@@ -1,18 +1,21 @@
-# grc overides for ls
-#   Made possible through contributions from generous benefactors like
-#   `brew install coreutils`
+# display
 
-if $(gls &>/dev/null)
-then
+if $(gls &>/dev/null); then
+  alias l="clear && lsr"
   alias ls="gls -F --color=auto"
-  alias l="gls -lAh --color=auto"
   alias ll="gls -l --color=auto"
   alias la='gls -A --color=auto'
+  alias er="clear && tree -C"
 fi
 
 # navigation
-alias l="clear && ls -oa "
-alias er="tree -I 'node_moduels|components|build|target' --filelimit"
-alias j=".. && l"
-alias k="- && l"
 
+alias j="cd .. && l"
+alias k="cd - && l"
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ....='cd ../../..'
+alias .....='cd ../../../..'
+
+# make mv ask before overwriting a file by default
+alias mv='mv -i'
