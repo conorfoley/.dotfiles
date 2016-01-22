@@ -58,9 +58,9 @@ function grep() {
 
   if [ $results ]; then
     while read line; do
-        local file=$(cut -d ':' -f1 <<< $line)
-        git check-ignore -q $file
-        test $? != 0 && echo $line
+      local file=$(cut -d ':' -f1 <<< $line)
+      git check-ignore -q $file
+      test $? != 0 && echo $line
     done <<< $results
   fi
 }
@@ -89,7 +89,7 @@ function get_ignored() {
   )
 
   patterns+=$(
-    find . -name '.gitignore' -type f -exec \
+    find . -maxdepth 3 -name '.gitignore' -type f -exec \
       sed "s,\(.*\),{}\1," {} \; \
         | /usr/bin/grep -v '^#' \
         | sed 's,\.gitignore,,' \
