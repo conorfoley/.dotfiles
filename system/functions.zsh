@@ -11,10 +11,10 @@ function lsr() {
     --color=always \
     --time-style='+%b-%d-%y %H:%M' \
     $@ \
-    | tail -n+2 \
-    | awk '{
-          printf "\033[0;30m%-11s %-4s %9s %s\033[0m %s %s %s\n", $1, $3, $4, $5, $6, $7, $8
-        }'
+      | tail -n+2 \
+      | awk '{
+            printf "\033[0;30m%-11s %-4s %9s %s\033[0m %s %s %s\n", $1, $3, $4, $5, $6, $7, $8
+          }'
 }
 
 # navigation
@@ -74,7 +74,7 @@ function tree() {
   array+=".git"
 
   # don't show files that we ignore globally in git
-  array+=$(rows_to_list $(git config --get core.excludesfile) "|")
+  array+=$(rows_to_list ~/.dotfiles/git/gitignore "|")
 
   if [ -f .gitignore ]; then
     # don't show files that we ignore locally in git
@@ -88,7 +88,7 @@ function tree() {
 
 function get_ignored() {
   local patterns=$(
-    cat $(git config --get core.excludesfile) \
+    cat ~/.dotfiles/git/gitignore \
       | /usr/bin/grep -v '^#'
   )
 
@@ -114,17 +114,17 @@ function get_ignored() {
 }
 
 function map_to_option() {
-    local option=$1
-    local list=$(tr ' ' '\n' <<< $2)
+  local option=$1
+  local list=$(tr ' ' '\n' <<< $2)
 
-    echo $list \
-      | sed "s,\(.*\),$option=\1," \
-      | tr '\n' ' '
+  echo $list \
+    | sed "s,\(.*\),$option=\1," \
+    | tr '\n' ' '
 }
 
 function rows_to_list() {
-    cat $1 \
-      | tr "\n" "$2" \
-      | sed "s/$2\($2*\)/$2/g" \
-      | sed "s/\(.*\)$2$/\1/"
+  cat $1 \
+    | tr "\n" "$2" \
+    | tr -s "$2" \
+    | sed "s/\(.*\)$2$/\1/"
 }

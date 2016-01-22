@@ -36,19 +36,19 @@ done
 unset config_files
 
 pathdirs=(
-  $HOME/.rvm/bin
   $HOME/bin
-  $HOME/bin/*
   /bin
+  /sbin
   /opt/bin
   /opt/ruby/bin
-  /sbin
-  /usr/local/bin
   /usr/local/heroku/bin
   /usr/local/lib/python2.7/site-packages
   /usr/local/opt/autoconf/bin
   /usr/local/opt/coreutils/libexec/gnubin
+  /usr/local/bin
   /usr/local/sbin
+  /usr/bin
+  /usr/sbin
 )
 
 for dir in $pathdirs; do
