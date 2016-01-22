@@ -41,6 +41,7 @@ link_files () {
 }
 
 install_dotfiles () {
+
   info 'installing dotfiles'
 
   overwrite_all=false

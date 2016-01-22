@@ -71,7 +71,7 @@ git_prompt_string() {
 
 parse_git_branch () {
   # Branch format found in regex at end of line: [branch]
-  git branch 2> /dev/null | grep "*" | sed -e 's/* \(.*\)/\1/g'
+  git branch 2> /dev/null | /usr/bin/grep "*" | sed -e 's/* \(.*\)/\1/g'
 }
 
 function precmd() {

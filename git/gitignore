@@ -10,8 +10,10 @@ tags
 *~
 *.swp
 *.rbc
-*.tern-port
 
 /npm-debug.log
-
+node_modules
 .mon
+
+TODO.org
+*.tern-port
