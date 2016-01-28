@@ -2,13 +2,15 @@
 
 alias tma='tmux attach -t'
 alias tmk='tmux kill-session -t'
-alias tmka='tmux kill-server'
+
+tmka() {
+  tmux kill-server 2>/dev/null
+  test $? -gt 0 && >&2 echo "no tmux sessions"
+}
 
 tml() {
   tmux list-sessions 2>/dev/null
-  if [ $? -gt 0 ]; then
-    >&2 echo "no tmux session"
-  fi
+  test $? -gt 0 && >&2 echo "no tmux sessions"
 }
 
 tmn() {
