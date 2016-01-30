@@ -14,6 +14,10 @@ tml() {
 }
 
 tmn() {
+  if [[ $1 == '.' ]]; then
+    1="$(basename `pwd`)"
+  fi
+
   local dir=$(
   find_project \
     $ZSH 1 $1 \
