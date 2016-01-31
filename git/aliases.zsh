@@ -85,10 +85,8 @@ function clone() {
   PROJECTS_DIR=$(basename $PROJECTS)
   BASE=$DEPTH[5]
 
-  # TODO
-  # check if arg1 is url for quick cloning
-  # e.g. https://github.com/(org)/(repo)
-  ARGS=("${(s,/,)@}")
+  PARTS=$(sed -E 's,https://github.com/(.*)/([a-zA-Z-]*).?(.*)?,\1/\2,' <<< $@)
+  ARGS=("${(s,/,)PARTS}")
   ORG=$ARGS[1]
   REPO=$ARGS[2]
 

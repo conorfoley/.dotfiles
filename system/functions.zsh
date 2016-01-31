@@ -52,7 +52,7 @@ function set-window-title() {
 
 # search
 
-function grep() {
+function gre() {
   local ignored=$(get_ignored)
   local dirs=$(sed -n 1p <<< $ignored)
   local results=$(
