@@ -55,8 +55,9 @@ for dir in $pathdirs; do
   test -d $dir && path+=$dir
 done
 
-# source optional profile
+# source optional profiles
 test -f ~/.zshprofile && source ~/.zshprofile
+test -f ~/.profile && source ~/.profile
 
 # use gnu manpages
 export HELPDIR=/usr/local/share/zsh/help

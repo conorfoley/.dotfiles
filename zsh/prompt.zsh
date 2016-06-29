@@ -21,7 +21,7 @@ GIT_PROMPT_STAGED="%{$fg_bold[green]%}●%{$reset_color%}"
 
 # Show Git branch/tag, or name-rev if on detached head
 parse_git_branch() {
-  (git symbolic-ref -q HEAD || git name-rev --name-only --no-undefined --always HEAD) 2> /dev/null
+  (hub symbolic-ref -q HEAD || hub name-rev --name-only --no-undefined --always HEAD) 2> /dev/null
 }
 
 # Show different symbols as appropriate for various Git repository states
@@ -71,7 +71,7 @@ git_prompt_string() {
 
 parse_git_branch () {
   # Branch format found in regex at end of line: [branch]
-  git branch 2> /dev/null | /usr/bin/grep "*" | sed -e 's/* \(.*\)/\1/g'
+  hub branch 2> /dev/null | /usr/bin/grep "*" | sed -e 's/* \(.*\)/\1/g'
 }
 
 function precmd() {
