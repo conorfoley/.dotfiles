@@ -14,26 +14,26 @@ tml() {
 }
 
 tmn() {
-  if [[ $1 == '.' ]]; then
-    1="$(basename `pwd`)"
+  local dir=
+
+  if [[ $# == 0 || $1 == '.' ]]; then
+    dir=`realpath .`
+  elif [ $1 =~ ^/ ]; then
+    dir=$1
+  else
+    dir=$(
+    find_project \
+      $ZSH 1 $1 \
+      $PROJECTS/$USER 1 $1 \
+      $PROJECTS 2 $1 \
+      ~ 1 $1 \
+      ~ 2 $1 \
+      /tmp 1 $1
+    )
   fi
 
-  local dir=$(
-  find_project \
-    $ZSH 1 $1 \
-    $PROJECTS/$USER 1 $1 \
-    $PROJECTS 2 $1 \
-    ~ 1 $1 \
-    ~ 2 $1 \
-    /tmp 1 $1
-  )
-
   if [ -z $dir ]; then
-    if [ $1 =~ ^/ ]; then
-      tmux_start_session $1
-    else
-      tmux_start_session ~/Projects/mndvns/$1
-    fi
+    tmux_start_session /tmp/$1
   else
     tmux_start_session $dir
   fi
@@ -44,18 +44,39 @@ tmux_start_session() {
   vared -p "path: " dir
   test $? -gt 0 && return 1
   local realdir=`echo $dir | sed "s,~,$HOME,"`
-
   local safename=`echo $realdir | tr -d '.' | xargs basename`
   vared -p "name: " safename
   test $? -gt 0 && return 1
 
   if [[ ! -d $realdir ]]; then
+    if [[ ! $realdir =~ ^/tmp/ ]]; then
+      local answer=
+      vared -p "make directory $realdir? [Yn] " answer
+      if [[ ! -z $answer && ($answer = n || $answer = N) ]]; then
+        >&2 echo "aborted."
+        return 1
+      fi
+    fi
+
     echo "creating $dir..."
     mkdir -p $realdir
   fi
 
-  cd $realdir
-  tmux new-session -A -s $safename
+  tmux list-window -t $safename &>/dev/null
+
+  if [ $? == 0 ]; then
+    local answer=
+    vared -p "session $safename already exists. attach? [Yn] " answer
+    if [[ ! -z $answer && ($answer = n || $answer = N) ]]; then
+      >&2 echo "aborted."
+      return 1
+    else
+      tmux attach-session -t $safename
+    fi
+  else
+    cd $realdir
+    tmux new-session -s $safename
+  fi
 }
 
 find_project() {
@@ -71,7 +92,7 @@ find_project() {
 
   if [ ! -z $project ]; then
     echo $project
-    exit
+    return
   fi
 
   if [ $# -gt 3 ]; then
@@ -79,6 +100,6 @@ find_project() {
     find_project $@
   else
     >&2 echo "no projects found"
-    exit 1
+    return 1
   fi
 }
