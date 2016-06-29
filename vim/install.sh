@@ -1,8 +1,11 @@
-vundle=~/.vim/bundle/vundle
+bundle=~/.vim/bundle
 
-if [ ! -d "$vundle" ]; then
-  mkdir -p ~/.vim/undo ~/.vim/temp $vundle
-  git clone https://github.com/gmarik/vundle.git $vundle
+if [ ! -d $bundle/Vundle.vim ]; then
+  git clone https://github.com/VundleVim/Vundle.vim $bundle/Vundle.vim
 fi
 
-vim +BundleInstall +qall
+colors=~/.vim/colors/solarized.vim
+rm $colors &>/dev/null
+ln -s $bundle/vim-colors-solarized/colors/solarized.vim $colors
+
+vim +PluginInstall +qall
