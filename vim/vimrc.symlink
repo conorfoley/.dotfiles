@@ -59,8 +59,6 @@ set backupdir=~/.vim/temp
 set nowritebackup
 set noswapfile
 set clipboard=unnamed
-set cursorline
-set cursorcolumn
 set expandtab
 set incsearch
 set ignorecase
@@ -148,3 +146,13 @@ nnoremap <silent> <leader>. :let g:NERDTreeWinPos = "right"<cr>:NERDTreeToggle<c
 nmap <Leader>a :Tabularize /
 vmap <Leader>a :Tabularize /
 nnoremap <leader>rt :Tagbar<cr>
+
+if (&t_Co > 2 || has("gui_running")) && has("syntax")
+  set background=dark
+  let g:solarized_termcolors=16
+  colorscheme solarized
+endif
+
+if filereadable(expand("~/.vimrc.local"))
+  source ~/.vimrc.local
+endif
