@@ -2,6 +2,7 @@
 (define-key evil-insert-state-map (kbd "C-j") 'next-line)
 (define-key evil-insert-state-map (kbd "C-k") 'previous-line)
 (define-key evil-insert-state-map (kbd "C-l") 'right-char)
+(define-key evil-insert-state-map (kbd "C-d") 'evil-delete-char)
 
 (global-set-key (kbd "C-M-s-h") 'windmove-left)
 (global-set-key (kbd "C-M-s-j") 'windmove-down)

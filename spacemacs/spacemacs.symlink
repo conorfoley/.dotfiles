@@ -30,15 +30,18 @@ values."
      elixir
      elm
      emacs-lisp
+     erlang
      (eyebrowse :variables
                 eyebrowse-display-help t)
      git
      html
      (javascript :variables
                  js2-basic-offset 2
-                 js2-strict-missing-semi-warning nil
-                 js2-missing-semi-one-line-override nil
                  js-indent-level 2
+                 js2-strict-missing-semi-warning nil
+                 js2-strict-inconsistent-return-warning nil
+                 js2-strict-trailing-comma-warning nil
+                 js2-missing-semi-one-line-override nil
                  js2-global-externs
                  '("node" ;; node-webkit
                    "phantom" ;; phantomjs
@@ -46,7 +49,7 @@ values."
                    "setTimeout" "clearTimeout" "setInterval" "clearInterval" "console" "JSON" "global" ;; javascript
                    "module" "require" "exports" ;; commonjs
                    "__filename" "__dirname" "process" "Buffer" ;; node
-                   "location" "window" "history" ;; browser
+                   "location" "window" "history" "localStorage" "browser" ;; browser
                    "it" "describe" "before" "after" "beforeEach" "afterEach" ;; mocha
                    "suite" "test" "setup" "teardown" ;; mocha tdd
                    "expect" ;; jasmine
@@ -55,6 +58,8 @@ values."
                    "Meteor" "Template" "Session" ;; meteor
                    "React" ;; react
                    "chrome" ;; chrome
+                   "logger" ;; optiv
+                   "MutationObserver"
                    ))
      local
      lua
@@ -121,12 +126,7 @@ values."
    ;; Press <SPC> T n to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
    dotspacemacs-themes '(solarized-dark
-                         solarized-light
-                         spacemacs-light
-                         spacemacs-dark
-                         leuven
-                         monokai
-                         zenburn)
+                         solarized-light)
    ;; If non nil the cursor color matches the state color.
    dotspacemacs-colorize-cursor-according-to-state t
    ;; Default font. `powerline-scale' allows to quickly tweak the mode-line
@@ -195,11 +195,11 @@ values."
    ;; If non nil the frame is maximized when Emacs starts up.
    ;; Takes effect only if `dotspacemacs-fullscreen-at-startup' is nil.
    ;; (default nil) (Emacs 24.4+ only)
-   dotspacemacs-maximized-at-startup nil
+   dotspacemacs-maximized-at-startup t
    ;; A value from the range (0..100), in increasing opacity, which describes
    ;; the transparency level of a frame when it's active or selected.
    ;; Transparency can be toggled through `toggle-transparency'. (default 90)
-   dotspacemacs-active-transparency 90
+   dotspacemacs-active-transparency 100
    ;; A value from the range (0..100), in increasing opacity, which describes
    ;; the transparency level of a frame when it's inactive or deselected.
    ;; Transparency can be toggled through `toggle-transparency'. (default 90)
@@ -216,7 +216,7 @@ values."
    ;; Select a scope to highlight delimiters. Possible values are `any',
    ;; `current', `all' or `nil'. Default is `all' (highlight any scope and
    ;; emphasis the current one). (default 'all)
-   dotspacemacs-highlight-delimiters 'all
+   dotspacemacs-highlight-delimiters 'current
    ;; If non nil advises quit functions to keep server open when quitting.
    ;; (default nil)
    dotspacemacs-persistent-server nil
@@ -237,6 +237,8 @@ values."
    css-indent-offset 2
    sh-basic-offset 2
    sh-indentation 2
+
+   projectile-enable-caching t
    )
   )
 
@@ -259,8 +261,15 @@ layers configuration. You are free to put any user code."
   (add-to-list 'auto-mode-alist '("\\.env.example\\'" . shell-script-mode))
 
   ;; ignore useless files
-  (eval-after-load 'ido '(add-to-list 'ido-ignore-files "\\.DS_Store"))
-  (eval-after-load 'ido '(add-to-list 'ido-ignore-files "\\.tern-port"))
+  (with-eval-after-load 'ido
+    (add-to-list 'ido-ignore-files "\\.DS_Store")
+    (add-to-list 'ido-ignore-files "\\.tern-port"))
+
+  ;; 2 space indent also for element's attributes, concatenations and contiguous function calls
+  (with-eval-after-load 'web-mode
+    (add-to-list 'web-mode-indentation-params '("lineup-args" . nil))
+    (add-to-list 'web-mode-indentation-params '("lineup-concats" . nil))
+    (add-to-list 'web-mode-indentation-params '("lineup-calls" . nil)))
 )
 
 ;; Do not write anything past this comment. This is where Emacs will
