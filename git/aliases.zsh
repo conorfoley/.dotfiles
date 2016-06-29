@@ -1,14 +1,5 @@
 # -*- mode: shell-script; -*-
 
-# Use `hub` as wrapper
-hub_path=$(which hub)
-if (( $+commands[hub] ))
-then
-  alias git=$hub_path
-fi
-
-alias git="noglob git"
-
 alias ga="git add -A"
 alias gb="git branch"
 alias gbd="git branch -D"
@@ -36,6 +27,25 @@ alias gst="git stash"
 alias gsh="git show"
 alias gstp="git stash pop"
 alias gcp="git cherry-pick"
+
+function gg() {
+  git log \
+    --all \
+    --color \
+    --graph \
+    --abbrev-commit \
+    --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%C(bold blue)<%an>%Creset'
+}
+
+function git() {
+  if [[ -z $1 ]]; then
+    noglob hub
+  elif [[ $1 = "merge" ]]; then
+    noglob hub $@ --no-ff
+  else
+    noglob hub $@
+  fi
+}
 
 function grao() {
   if [[ -z $argv ]]; then
