@@ -20,6 +20,7 @@ values."
    ;; of a list then all discovered layers will be installed.
    dotspacemacs-configuration-layers
    '(
+     python
      ;; ----------------------------------------------------------------
      ;; Example of useful layers you may want to use right away.
      ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
@@ -27,12 +28,21 @@ values."
      ;; ----------------------------------------------------------------
      auto-completion
      better-defaults
-     elixir
+     (elixir :variables
+             alchemist-goto-erlang-source-dir "/usr/local/Cellar/erlang/19.0.2"
+             alchemist-goto-elixir-source-dir "/usr/local/Cellar/elixir/1.3.2"
+
+             alchemist-hooks-test-on-save nil
+             alchemist-hooks-compile-on-save nil
+
+             alchemist-test-ask-about-save nil
+             alchemist-test-display-compilation-output nil
+             )
      elm
      emacs-lisp
      erlang
-     (eyebrowse :variables
-                eyebrowse-display-help t)
+     ;; (eyebrowse :variables
+     ;;            eyebrowse-display-help t)
      git
      html
      (javascript :variables
@@ -75,19 +85,26 @@ values."
      (shell :variables
             shell-default-height 30
             shell-default-position 'bottom)
+     shell-scripts
      spacemacs-layouts
      spell-checking
      stylus
      syntax-checking
-     unimpaired
      version-control
      vinegar
+     vimscript
+     yaml
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
    ;; packages then consider to create a layer, you can also put the
    ;; configuration in `dotspacemacs/config'.
-   dotspacemacs-additional-packages '()
+   dotspacemacs-additional-packages '(
+                                      ob-elixir
+                                      org-page
+                                      org-ehtml
+                                      org-fstree
+                                      )
    ;; A list of packages and/or extensions that will not be install and loaded.
    dotspacemacs-excluded-packages '()
    ;; If non-nil spacemacs will delete any orphan packages, i.e. packages that
@@ -125,17 +142,23 @@ values."
    ;; List of themes, the first of the list is loaded when spacemacs starts.
    ;; Press <SPC> T n to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
-   dotspacemacs-themes '(solarized-dark
-                         solarized-light)
+   dotspacemacs-themes '(
+                         solarized-dark
+                         ;; monochrome-bright
+                         ;; solarized-light
+                         ;; sanityinc-tomorrow-day
+                         minimal-light
+                         ;; ritchie
+                         )
    ;; If non nil the cursor color matches the state color.
    dotspacemacs-colorize-cursor-according-to-state t
    ;; Default font. `powerline-scale' allows to quickly tweak the mode-line
    ;; size to make separators look not too crappy.
    dotspacemacs-default-font '("Source Code Pro"
-                               :size 13
+                               :size 11
                                :weight normal
                                :width normal
-                               :powerline-scale 1.1)
+                               :powerline-scale 1)
    ;; The leader key
    dotspacemacs-leader-key "SPC"
    ;; The leader key accessible in `emacs state' and `insert state'
@@ -249,16 +272,67 @@ user code."
   )
 
 (defun dotspacemacs/user-config ()
-  (setq-default evil-escape-key-sequence "kj")
   "Configuration function for user code.
  This function is called at the very end of Spacemacs initialization after
 layers configuration. You are free to put any user code."
 
-  (setq org-bullets-bullet-list '("■" "◆" "▲" "▶"))
+  (setq-default evil-escape-key-sequence "kj")
+
+  ;; (spacemacs/toggle-golden-ratio-on)
+  (setq-default vc-follow-symlinks t)
+
+  ;; truncate lines
+  (setq-default truncate-lines t)
+  (setq-default truncate-partial-width-windows nil)
+
+  (add-to-list 'spacemacs-indent-sensitive-modes 'elixir-mode)
+
   (add-to-list 'auto-mode-alist '("\\.ess\\'" . stylus-mode))
   (add-to-list 'auto-mode-alist '("\\.zsh\\'" . shell-script-mode))
   (add-to-list 'auto-mode-alist '("\\.env\\'" . shell-script-mode))
-  (add-to-list 'auto-mode-alist '("\\.env.example\\'" . shell-script-mode))
+
+  ;; org-mode
+  (load-file "~/org/config/templates.el")
+  (load-file "~/org/config/projects.el")
+  ;; (setq org-bullets-bullet-list '("■" "◆" "▲" "▶"))
+  (eval-after-load 'org
+    (lambda()
+      (require 'ob-R)
+      (require 'ob-emacs-lisp)
+      (require 'ob-latex)
+      (require 'ob-python)
+      (require 'ob-shell)
+      (require 'ob-perl)
+      (require 'ob-org)
+      (require 'ob-css)
+      (require 'ob-js)
+      (setq org-export-babel-evaluate nil)
+      (setq org-startup-indented t)
+      ;; increase imenu depth to include third level headings
+      (setq org-imenu-depth 3)
+      ;; Set sensible mode for editing dot files
+      (add-to-list 'org-src-lang-modes '("dot" . graphviz-dot))
+      ;; Update images from babel code blocks automatically
+      (add-hook 'org-babel-after-execute-hook 'org-display-inline-images)
+      (setq org-src-fontify-natively t)
+      (setq org-src-tab-acts-natively t)
+      (setq org-confirm-babel-evaluate nil)
+
+      ))
+
+  ;; org languages
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '(
+     (R . t)
+     (calc . t)
+     (elixir . t)
+     (emacs-lisp . t)
+     (java . t)
+     (js . t)
+     (python . t)
+     (dot . t)
+     ))
 
   ;; ignore useless files
   (with-eval-after-load 'ido
@@ -271,6 +345,3 @@ layers configuration. You are free to put any user code."
     (add-to-list 'web-mode-indentation-params '("lineup-concats" . nil))
     (add-to-list 'web-mode-indentation-params '("lineup-calls" . nil)))
 )
-
-;; Do not write anything past this comment. This is where Emacs will
-;; auto-generate custom variable definitions.
